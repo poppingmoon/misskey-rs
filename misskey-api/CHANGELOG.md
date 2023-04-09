@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for Misskey v12.75.0 ~ v12.76.1
 - `muted_notification_types` user setting which is available since v12.48.0
 - Support for Misskey v12.77.0
+- Support for Misskey v12.77.1 ~ v12.78.0
+   - endpoint `notifications/read`
 
 ### Changed
 ### Deprecated
