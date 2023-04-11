@@ -10,13 +10,14 @@ use crate::builder::GalleryPostBuilder;
 use crate::builder::GalleryPostUpdateBuilder;
 #[cfg(feature = "12-27-0")]
 use crate::builder::NotificationBuilder;
+#[cfg(not(feature = "12-88-0"))]
+use crate::builder::UserListBuilder;
 #[cfg(feature = "12-80-0")]
 use crate::builder::{AdBuilder, AdUpdateBuilder};
 use crate::builder::{
     AnnouncementUpdateBuilder, AntennaBuilder, AntennaUpdateBuilder, DriveFileBuilder,
     DriveFileListBuilder, DriveFileUpdateBuilder, DriveFileUrlBuilder, DriveFolderUpdateBuilder,
     MeUpdateBuilder, MessagingMessageBuilder, MetaUpdateBuilder, NoteBuilder, ServerLogListBuilder,
-    UserListBuilder,
 };
 #[cfg(feature = "12-47-0")]
 use crate::builder::{ChannelBuilder, ChannelUpdateBuilder};
@@ -87,7 +88,7 @@ macro_rules! impl_timeline_method {
             /// # #[tokio::main]
             /// # async fn main() -> anyhow::Result<()> {
             /// # let client = misskey_test::test_client().await?;
-            /// # let user = client.users().list().try_next().await?.unwrap();
+            /// # let user = client.me().await?;
             /// # #[cfg(feature = "12-47-0")]
             /// # let channel = client.create_channel("test").await?;
             /// # let list = client.create_user_list("test").await?;
@@ -113,7 +114,7 @@ macro_rules! impl_timeline_method {
             /// # #[tokio::main]
             /// # async fn main() -> anyhow::Result<()> {
             /// # let client = misskey_test::test_client().await?;
-            /// # let user = client.users().list().try_next().await?.unwrap();
+            /// # let user = client.me().await?;
             /// # #[cfg(feature = "12-47-0")]
             /// # let channel = client.create_channel("test").await?;
             /// # let list = client.create_user_list("test").await?;
@@ -185,7 +186,7 @@ macro_rules! impl_timeline_method {
             /// # #[tokio::main]
             /// # async fn main() -> anyhow::Result<()> {
             /// # let client = misskey_test::test_client().await?;
-            /// # let user = client.users().list().try_next().await?.unwrap();
+            /// # let user = client.me().await?;
             /// # #[cfg(feature = "12-47-0")]
             /// # let channel = client.create_channel("test").await?;
             /// # let list = client.create_user_list("test").await?;
@@ -650,7 +651,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -676,7 +678,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -702,7 +705,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -728,7 +732,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -754,7 +759,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -777,7 +783,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -808,7 +815,8 @@ pub trait ClientExt: Client + Sync {
     ///
     /// [user_relation]: ClientExt::user_relation
     ///
-    /// ```
+    #[cfg_attr(not(feature = "12-88-0"), doc = "```")]
+    #[cfg_attr(feature = "12-88-0", doc = "```ignore")]
     /// # use misskey_util::ClientExt;
     /// # use futures::stream::TryStreamExt;
     /// # #[tokio::main]
@@ -922,11 +930,17 @@ pub trait ClientExt: Client + Sync {
     /// # Ok(())
     /// # }
     /// ```
+    // misskey-dev/misskey#7656
+    #[cfg(not(feature = "12-88-0"))]
+    #[cfg_attr(docsrs, doc(cfg(not(feature = "12-88-0"))))]
     fn users(&self) -> UserListBuilder<&Self> {
         UserListBuilder::new(self)
     }
 
     /// Lists the recommended users of the instance.
+    // misskey-dev/misskey#7656
+    #[cfg(not(feature = "12-88-0"))]
+    #[cfg_attr(docsrs, doc(cfg(not(feature = "12-88-0"))))]
     fn recommended_users(&self) -> PagerStream<BoxPager<Self, User>> {
         let pager = OffsetPager::new(self, endpoint::users::recommendation::Request::default());
         PagerStream::new(Box::pin(pager))
