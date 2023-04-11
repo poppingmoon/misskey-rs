@@ -21,6 +21,9 @@ mod user;
 #[cfg(feature = "12-47-0")]
 mod channel;
 
+#[cfg(feature = "12-79-0")]
+mod gallery;
+
 pub use admin::{
     AnnouncementUpdateBuilder, EmojiUpdateBuilder, MetaUpdateBuilder, ServerLogListBuilder,
 };
@@ -42,3 +45,7 @@ pub use channel::{ChannelBuilder, ChannelUpdateBuilder};
 #[cfg(feature = "12-27-0")]
 #[cfg_attr(docsrs, doc(cfg(feature = "12-27-0")))]
 pub use misc::NotificationBuilder;
+
+#[cfg(feature = "12-79-0")]
+#[cfg_attr(docsrs, doc(cfg(feature = "12-79-0")))]
+pub use gallery::GalleryPostBuilder;
