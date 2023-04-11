@@ -577,6 +577,8 @@ impl<C> AdBuilder<C> {
             memo: String::default(),
             place: "square".to_string(),
             priority: "middle".to_string(),
+            #[cfg(feature = "12-81-0")]
+            ratio: 1,
             expires_at: chrono::Utc::now() + chrono::Duration::hours(1),
             image_url: String::default(),
         };
@@ -616,6 +618,13 @@ impl<C> AdBuilder<C> {
         self.place("horizontal")
     }
 
+    #[cfg(feature = "12-81-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "12-81-0")))]
+    /// Sets the place of the ad to horizontal-big.
+    pub fn horizontal_big(&mut self) -> &mut Self {
+        self.place("horizontal-big")
+    }
+
     /// Sets the priority of the ad.
     pub fn priority(&mut self, priority: impl Into<String>) -> &mut Self {
         self.request.priority = priority.into();
@@ -635,6 +644,14 @@ impl<C> AdBuilder<C> {
     /// Sets the priority of the ad to high.
     pub fn low_priority(&mut self) -> &mut Self {
         self.priority("low")
+    }
+
+    #[cfg(feature = "12-81-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "12-81-0")))]
+    /// Sets the ratio of the ad.
+    pub fn ratio(&mut self, ratio: u64) -> &mut Self {
+        self.request.ratio = ratio;
+        self
     }
 
     /// Sets the expiration date of the ad.
@@ -682,6 +699,8 @@ impl<C> AdUpdateBuilder<C> {
             expires_at,
             place,
             priority,
+            #[cfg(feature = "12-81-0")]
+            ratio,
             url,
             image_url,
             memo,
@@ -697,6 +716,8 @@ impl<C> AdUpdateBuilder<C> {
             memo,
             place,
             priority,
+            #[cfg(feature = "12-81-0")]
+            ratio,
             expires_at,
             image_url,
         };
@@ -736,6 +757,13 @@ impl<C> AdUpdateBuilder<C> {
         self.place("horizontal")
     }
 
+    #[cfg(feature = "12-81-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "12-81-0")))]
+    /// Sets the place of the ad to horizontal-big.
+    pub fn horizontal_big(&mut self) -> &mut Self {
+        self.place("horizontal-big")
+    }
+
     /// Sets the priority of the ad.
     pub fn priority(&mut self, priority: impl Into<String>) -> &mut Self {
         self.request.priority = priority.into();
@@ -755,6 +783,14 @@ impl<C> AdUpdateBuilder<C> {
     /// Sets the priority of the ad to high.
     pub fn low_priority(&mut self) -> &mut Self {
         self.priority("low")
+    }
+
+    #[cfg(feature = "12-81-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "12-81-0")))]
+    /// Sets the ratio of the ad.
+    pub fn ratio(&mut self, ratio: u64) -> &mut Self {
+        self.request.ratio = ratio;
+        self
     }
 
     /// Sets the expiration date of the ad.

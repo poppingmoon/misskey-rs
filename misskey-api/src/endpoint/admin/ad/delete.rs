@@ -30,6 +30,8 @@ mod tests {
                 memo: "memo".to_string(),
                 place: "square".to_string(),
                 priority: "middle".to_string(),
+                #[cfg(feature = "12-81-0")]
+                ratio: 1,
                 image_url: url.to_string(),
                 expires_at: chrono::Utc::now() + chrono::Duration::hours(1),
             })
