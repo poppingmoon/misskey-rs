@@ -14,6 +14,9 @@ pub struct Ad {
     pub place: String,
     #[serde(default)]
     pub priority: Option<String>,
+    #[cfg(feature = "12-81-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "12-81-0")))]
+    pub ratio: u64,
     pub url: String,
     pub image_url: String,
     #[serde(default)]
