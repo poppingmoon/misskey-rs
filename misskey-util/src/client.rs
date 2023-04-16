@@ -392,10 +392,14 @@ pub trait ClientExt: Client + Sync {
     fn mute(&self, user: impl EntityRef<User>) -> BoxFuture<Result<(), Error<Self::Error>>> {
         let user_id = user.entity_ref();
         Box::pin(async move {
-            self.request(endpoint::mute::create::Request { user_id })
-                .await
-                .map_err(Error::Client)?
-                .into_result()?;
+            self.request(endpoint::mute::create::Request {
+                user_id,
+                #[cfg(feature = "12-108-0")]
+                expires_at: None,
+            })
+            .await
+            .map_err(Error::Client)?
+            .into_result()?;
             Ok(())
         })
     }
@@ -3780,7 +3784,7 @@ pub trait ClientExt: Client + Sync {
     /// client
     ///     .update_meta()
     ///     .set_name("The Instance of Saturn")
-    ///     .max_note_text_length(5000)
+    ///     .local_drive_capacity(5000)
     ///     .update()
     ///     .await?;
     /// # Ok(())

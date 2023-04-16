@@ -61,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for Misskey v12.105.0
 - Support for Misskey v12.106.0 ~ v12.106.3
 - Support for Misskey v12.107.0
+- Support for Misskey v12.108.0 ~ v12.108.1
 
 ### Changed
 ### Deprecated
@@ -81,6 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - For Misskey v12.104.0 ~
 - endpoint `stats`
    - For Misskey v12.106.0 ~ v12.106.3
+- endpoint `email-address/available`
+   - For Misskey v12.108.0
 
 ### Fixed
 
