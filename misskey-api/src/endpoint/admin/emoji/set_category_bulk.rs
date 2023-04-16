@@ -22,8 +22,7 @@ mod tests {
     #[tokio::test]
     async fn request() {
         let client = TestClient::new();
-        let image_url = client.avatar_url().await;
-        let id = client.admin.add_emoji_from_url(image_url).await;
+        let id = client.admin.get_emoji_id().await;
 
         client
             .admin
@@ -37,18 +36,12 @@ mod tests {
     #[tokio::test]
     async fn request_with_category() {
         let client = TestClient::new();
-        let ids = client
-            .admin
-            .test(crate::endpoint::admin::emoji::list::Request::default())
-            .await
-            .iter()
-            .map(|emoji| emoji.id)
-            .collect();
+        let id = client.admin.get_emoji_id().await;
 
         client
             .admin
             .test(Request {
-                ids,
+                ids: vec![id],
                 category: Some("cat".to_string()),
             })
             .await;

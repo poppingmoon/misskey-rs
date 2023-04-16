@@ -66,8 +66,7 @@ mod tests {
     async fn request_paginate() {
         let client = TestClient::new();
         let user = client.user.me().await;
-        let url = client.avatar_url().await;
-        let file = client.upload_from_url(url).await;
+        let file = client.get_drive_file().await;
 
         let post = client
             .test(crate::endpoint::gallery::posts::create::Request {

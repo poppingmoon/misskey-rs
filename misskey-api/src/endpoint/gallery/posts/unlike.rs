@@ -21,8 +21,7 @@ mod tests {
     #[tokio::test]
     async fn request() {
         let client = TestClient::new();
-        let url = client.avatar_url().await;
-        let file = client.upload_from_url(url).await;
+        let file = client.get_drive_file().await;
 
         let post = client
             .user

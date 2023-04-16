@@ -28,7 +28,9 @@ pub trait ClientExt {
     // so we need this
     async fn upload_from_url(&self, url: Url) -> DriveFile;
     async fn avatar_url(&self) -> Url;
+    async fn get_drive_file(&self) -> DriveFile;
     async fn add_emoji_from_url(&self, url: Url) -> Id<Emoji>;
+    async fn get_emoji_id(&self) -> Id<Emoji>;
 }
 
 #[async_trait::async_trait]
@@ -151,6 +153,22 @@ impl<T: Client + Send + Sync> ClientExt for T {
         }
     }
 
+    async fn get_drive_file(&self) -> DriveFile {
+        let files = self
+            .test(
+                crate::endpoint::drive::files::Request::builder()
+                    .limit(1)
+                    .build(),
+            )
+            .await;
+        if let Some(file) = files.into_iter().next() {
+            file
+        } else {
+            let url = self.avatar_url().await;
+            self.upload_from_url(url).await
+        }
+    }
+
     #[cfg(feature = "12-9-0")]
     async fn add_emoji_from_url(&self, url: Url) -> Id<Emoji> {
         let file = self.upload_from_url(url).await;
@@ -170,5 +188,17 @@ impl<T: Client + Send + Sync> ClientExt for T {
         })
         .await
         .id
+    }
+
+    async fn get_emoji_id(&self) -> Id<Emoji> {
+        let emojis = self
+            .test(crate::endpoint::admin::emoji::list::Request::default())
+            .await;
+        if let Some(emoji) = emojis.into_iter().next() {
+            emoji.id
+        } else {
+            let url = self.avatar_url().await;
+            self.add_emoji_from_url(url).await
+        }
     }
 }

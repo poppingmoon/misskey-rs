@@ -33,8 +33,9 @@ mod tests {
     #[tokio::test]
     async fn request() {
         let client = TestClient::new();
+        #[cfg(not(feature = "12-9-0"))]
         let image_url = client.avatar_url().await;
-        let id = client.admin.add_emoji_from_url(image_url.clone()).await;
+        let id = client.admin.get_emoji_id().await;
         let name = ulid_crate::Ulid::new().to_string();
 
         client

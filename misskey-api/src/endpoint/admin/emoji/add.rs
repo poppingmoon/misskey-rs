@@ -56,8 +56,7 @@ mod tests {
     #[cfg(feature = "12-9-0")]
     async fn request() {
         let client = TestClient::new();
-        let image_url = client.avatar_url().await;
-        let file = client.upload_from_url(image_url).await;
+        let file = client.get_drive_file().await;
         client.admin.test(Request { file_id: file.id }).await;
     }
 
