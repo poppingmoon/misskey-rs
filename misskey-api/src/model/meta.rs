@@ -66,9 +66,11 @@ pub struct Meta {
     pub error_image_url: Option<String>,
     pub icon_url: Option<String>,
     pub max_note_text_length: u64,
+    #[serde(default)]
     pub emojis: Vec<Emoji>,
     #[cfg(feature = "12-81-0")]
     #[cfg_attr(docsrs, doc(cfg(feature = "12-81-0")))]
+    #[serde(default)]
     pub ads: Vec<Ad>,
     /// This field is [`bool`] (i.e. not [`Option`]) on <span class="module-item stab portability" style="display: inline-block; font-size: 80%;"><strong>non-<code style="background-color: transparent;">feature="12-58-0"</code></strong></span>.
     #[cfg(feature = "12-58-0")]

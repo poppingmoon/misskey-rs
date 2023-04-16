@@ -4050,6 +4050,22 @@ pub trait ClientExt: Client + Sync {
         let pager = BackwardPager::new(self, endpoint::admin::ad::list::Request::default());
         PagerStream::new(Box::pin(pager))
     }
+
+    /// Gets detailed information about the instance.
+    ///
+    /// This operation may require moderator privileges.
+    #[cfg(feature = "12-109-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "12-109-0")))]
+    fn admin_meta(&self) -> BoxFuture<Result<Meta, Error<Self::Error>>> {
+        Box::pin(async move {
+            let meta = self
+                .request(endpoint::admin::meta::Request::default())
+                .await
+                .map_err(Error::Client)?
+                .into_result()?;
+            Ok(meta)
+        })
+    }
     // }}}
 
     // {{{ Miscellaneous
