@@ -38,6 +38,7 @@ mod tests {
     async fn request() {
         let client = TestClient::new();
         client
+            .admin
             .test(
                 crate::endpoint::notifications::create::Request::builder()
                     .body("hi")
@@ -48,12 +49,14 @@ mod tests {
         let mut notification = None;
         while notification.is_none() {
             notification = client
+                .admin
                 .test(crate::endpoint::i::notifications::Request::default())
                 .await
                 .pop();
         }
 
         client
+            .admin
             .test(Request {
                 notification_id: notification.unwrap().id,
             })
@@ -65,6 +68,7 @@ mod tests {
     async fn request_with_announsement_ids() {
         let client = TestClient::new();
         client
+            .admin
             .test(crate::endpoint::notifications::create::Request {
                 body: "hi".to_string(),
                 header: None,
@@ -73,10 +77,12 @@ mod tests {
             .await;
 
         let notifications = client
+            .admin
             .test(crate::endpoint::i::notifications::Request::default())
             .await;
 
         client
+            .admin
             .test(RequestWithNotificationIds {
                 notification_ids: notifications
                     .iter()
