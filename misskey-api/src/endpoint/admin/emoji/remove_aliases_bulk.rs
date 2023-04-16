@@ -21,21 +21,13 @@ mod tests {
 
     #[tokio::test]
     async fn request() {
-        use crate::model::{emoji::Emoji, id::Id};
-
         let client = TestClient::new();
-        let ids: Vec<Id<Emoji>> = client
-            .admin
-            .test(crate::endpoint::admin::emoji::list::Request::default())
-            .await
-            .iter()
-            .map(|emoji| emoji.id)
-            .collect();
+        let id = client.admin.get_emoji_id().await;
 
         client
             .admin
             .test(crate::endpoint::admin::emoji::add_aliases_bulk::Request {
-                ids: ids.clone(),
+                ids: vec![id],
                 aliases: vec!["alias1".to_string(), "alias2".to_string()],
             })
             .await;
@@ -43,7 +35,7 @@ mod tests {
         client
             .admin
             .test(Request {
-                ids,
+                ids: vec![id],
                 aliases: vec!["alias1".to_string()],
             })
             .await;

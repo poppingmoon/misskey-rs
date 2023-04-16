@@ -21,14 +21,8 @@ mod tests {
     #[tokio::test]
     async fn request() {
         let client = TestClient::new();
-        let ids = client
-            .admin
-            .test(crate::endpoint::admin::emoji::list::Request::default())
-            .await
-            .iter()
-            .map(|emoji| emoji.id)
-            .collect();
+        let id = client.admin.get_emoji_id().await;
 
-        client.admin.test(Request { ids }).await;
+        client.admin.test(Request { ids: vec![id] }).await;
     }
 }
