@@ -11,7 +11,7 @@ db:
   user: misskey-test
   pass: misskey-test
   extra:
-    statement_timeout: 60000,
+    statement_timeout: 60000
 
 redis:
   host: redis
