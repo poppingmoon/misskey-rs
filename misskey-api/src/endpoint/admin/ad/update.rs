@@ -65,6 +65,7 @@ mod tests {
             .await;
 
         client
+            .admin
             .test(Request {
                 id: ads[0].id,
                 url: url.to_string(),
