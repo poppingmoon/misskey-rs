@@ -34,7 +34,7 @@ mod tests {
     #[tokio::test]
     async fn request() {
         let client = TestClient::new();
-        client.user.test(Request::default()).await;
+        client.admin.test(Request::default()).await;
     }
 
     #[tokio::test]
@@ -42,6 +42,7 @@ mod tests {
         let client = TestClient::new();
 
         client
+            .admin
             .test(Request {
                 limit: Some(100),
                 since_id: None,
@@ -71,6 +72,7 @@ mod tests {
         let ads = client.admin.test(Request::default()).await;
 
         client
+            .admin
             .test(Request {
                 limit: None,
                 since_id: Some(ads[0].id.clone()),

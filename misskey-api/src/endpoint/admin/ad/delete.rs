@@ -42,6 +42,6 @@ mod tests {
             .test(crate::endpoint::admin::ad::list::Request::default())
             .await;
 
-        client.test(Request { id: ads[0].id }).await;
+        client.admin.test(Request { id: ads[0].id }).await;
     }
 }
