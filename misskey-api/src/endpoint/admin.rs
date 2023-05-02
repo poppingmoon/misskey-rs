@@ -83,3 +83,7 @@ pub mod silence_user;
 #[cfg(not(feature = "13-0-0"))]
 #[cfg_attr(docsrs, doc(cfg(not(feature = "13-0-0"))))]
 pub mod unsilence_user;
+
+#[cfg(not(feature = "13-0-0"))]
+#[cfg_attr(docsrs, doc(cfg(not(feature = "13-0-0"))))]
+pub mod vacuum;

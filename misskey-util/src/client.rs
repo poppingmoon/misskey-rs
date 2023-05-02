@@ -74,6 +74,7 @@ use misskey_api::model::{
 };
 #[cfg(feature = "13-0-0")]
 use misskey_api::model::{
+    emoji::EmojiSimple,
     flash::Flash,
     role::{PoliciesSimple, Role},
 };
@@ -1263,6 +1264,8 @@ pub trait ClientExt: Client + Sync {
     }
 
     /// Watches the specified note.
+    #[cfg(not(feature = "13-0-0"))]
+    #[cfg_attr(docsrs, doc(cfg(not(feature = "13-0-0"))))]
     fn watch(&self, note: impl EntityRef<Note>) -> BoxFuture<Result<(), Error<Self::Error>>> {
         let note_id = note.entity_ref();
         Box::pin(async move {
@@ -1275,6 +1278,8 @@ pub trait ClientExt: Client + Sync {
     }
 
     /// Unwatches the specified note.
+    #[cfg(not(feature = "13-0-0"))]
+    #[cfg_attr(docsrs, doc(cfg(not(feature = "13-0-0"))))]
     fn unwatch(&self, note: impl EntityRef<Note>) -> BoxFuture<Result<(), Error<Self::Error>>> {
         let note_id = note.entity_ref();
         Box::pin(async move {
@@ -1334,6 +1339,8 @@ pub trait ClientExt: Client + Sync {
     }
 
     /// Checks if the specified note is watched by the user logged in with this client.
+    #[cfg(not(feature = "13-0-0"))]
+    #[cfg_attr(docsrs, doc(cfg(not(feature = "13-0-0"))))]
     fn is_watched(
         &self,
         note: impl EntityRef<Note>,
@@ -4734,6 +4741,22 @@ pub trait ClientExt: Client + Sync {
     #[cfg_attr(docsrs, doc(cfg(feature = "12-27-0")))]
     fn build_notification(&self) -> NotificationBuilder<&Self> {
         NotificationBuilder::new(self)
+    }
+
+    /// Lists the emojis in the instance.
+    ///
+    /// Use [`admin_emojis`][`ClientExt::admin_emojis`] method if you want to get a list of custom emojis with details.
+    #[cfg(feature = "13-0-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-0-0")))]
+    fn emojis(&self) -> BoxFuture<Result<Vec<EmojiSimple>, Error<Self::Error>>> {
+        Box::pin(async move {
+            let response = self
+                .request(endpoint::emojis::Request::default())
+                .await
+                .map_err(Error::Client)?
+                .into_result()?;
+            Ok(response.emojis)
+        })
     }
     // }}}
 }
