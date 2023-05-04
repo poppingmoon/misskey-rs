@@ -12,10 +12,10 @@ pub struct Request {
     #[builder(default, setter(into))]
     pub memo: String,
     /// [ 1 .. ] characters
-    #[builder(default, setter(into))]
+    #[builder(setter(into))]
     pub url: String,
     /// [ 1 .. ] characters
-    #[builder(default, setter(into))]
+    #[builder(setter(into))]
     pub image_url: String,
     #[builder(default, setter(into))]
     pub place: String,
@@ -47,16 +47,13 @@ mod tests {
 
         client
             .admin
-            .test(crate::endpoint::admin::ad::create::Request {
-                url: url.to_string(),
-                memo: "memo".to_string(),
-                place: "square".to_string(),
-                priority: "middle".to_string(),
-                #[cfg(feature = "12-81-0")]
-                ratio: 1,
-                image_url: url.to_string(),
-                expires_at: chrono::Utc::now() + chrono::Duration::hours(1),
-            })
+            .test(
+                crate::endpoint::admin::ad::create::Request::builder()
+                    .url(url.clone())
+                    .image_url(url.clone())
+                    .expires_at(chrono::Utc::now() + chrono::Duration::hours(1))
+                    .build(),
+            )
             .await;
 
         let ads = client

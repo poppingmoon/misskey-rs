@@ -25,16 +25,13 @@ mod tests {
 
         client
             .admin
-            .test(crate::endpoint::admin::ad::create::Request {
-                url: url.to_string(),
-                memo: "memo".to_string(),
-                place: "square".to_string(),
-                priority: "middle".to_string(),
-                #[cfg(feature = "12-81-0")]
-                ratio: 1,
-                image_url: url.to_string(),
-                expires_at: chrono::Utc::now() + chrono::Duration::hours(1),
-            })
+            .test(
+                crate::endpoint::admin::ad::create::Request::builder()
+                    .url(url.clone())
+                    .image_url(url.clone())
+                    .expires_at(chrono::Utc::now() + chrono::Duration::hours(1))
+                    .build(),
+            )
             .await;
 
         let ads = client
