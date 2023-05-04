@@ -1045,6 +1045,14 @@ impl<C> RoleBuilder<C> {
         self
     }
 
+    /// Sets the icon url of the role.
+    #[cfg(feature = "13-4-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-4-0")))]
+    pub fn icon_url(&mut self, icon_url: impl Into<String>) -> &mut Self {
+        self.request.icon_url.replace(icon_url.into());
+        self
+    }
+
     /// Sets the assignment type of the role.
     pub fn target(&mut self, target: impl Into<Target>) -> &mut Self {
         self.request.target = target.into();
@@ -1087,6 +1095,14 @@ impl<C> RoleBuilder<C> {
     /// Sets whether to give the administrator permission to the members of the role.
     pub fn administrator(&mut self, administrator: bool) -> &mut Self {
         self.request.is_administrator = administrator;
+        self
+    }
+
+    /// Sets whether to show the icon image next to the usernames.
+    #[cfg(feature = "13-4-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-4-0")))]
+    pub fn show_as_badge(&mut self, as_badge: bool) -> &mut Self {
+        self.request.as_badge = as_badge;
         self
     }
 
@@ -1317,11 +1333,15 @@ impl<C> RoleUpdateBuilder<C> {
             name,
             description,
             color,
+            #[cfg(feature = "13-4-0")]
+            icon_url,
             target,
             cond_formula,
             is_public,
             is_moderator,
             is_administrator,
+            #[cfg(feature = "13-4-0")]
+            as_badge,
             can_edit_members_by_moderator,
             policies,
             ..
@@ -1331,11 +1351,15 @@ impl<C> RoleUpdateBuilder<C> {
             name,
             description,
             color,
+            #[cfg(feature = "13-4-0")]
+            icon_url,
             target,
             cond_formula,
             is_public,
             is_moderator,
             is_administrator,
+            #[cfg(feature = "13-4-0")]
+            as_badge,
             can_edit_members_by_moderator,
             policies,
         };
@@ -1362,6 +1386,14 @@ impl<C> RoleUpdateBuilder<C> {
     /// Sets the color of the role.
     pub fn color(&mut self, color: impl Into<String>) -> &mut Self {
         self.request.color.replace(color.into());
+        self
+    }
+
+    /// Sets the icon url of the role.
+    #[cfg(feature = "13-4-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-4-0")))]
+    pub fn icon_url(&mut self, icon_url: impl Into<String>) -> &mut Self {
+        self.request.icon_url.replace(icon_url.into());
         self
     }
 
@@ -1406,6 +1438,14 @@ impl<C> RoleUpdateBuilder<C> {
     /// Sets whether to give the administrator permission to the members of the role.
     pub fn administrator(&mut self, administrator: bool) -> &mut Self {
         self.request.is_administrator = administrator;
+        self
+    }
+
+    /// Sets whether to show the icon image next to the usernames.
+    #[cfg(feature = "13-4-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-4-0")))]
+    pub fn show_as_badge(&mut self, as_badge: bool) -> &mut Self {
+        self.request.as_badge = as_badge;
         self
     }
 
