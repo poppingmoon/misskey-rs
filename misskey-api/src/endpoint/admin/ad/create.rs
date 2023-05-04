@@ -7,7 +7,7 @@ use typed_builder::TypedBuilder;
 #[builder(doc)]
 pub struct Request {
     /// [ 1 .. ] characters
-    #[builder(default, setter(into))]
+    #[builder(setter(into))]
     pub url: String,
     #[builder(default, setter(into))]
     pub memo: String,
@@ -23,7 +23,7 @@ pub struct Request {
     #[builder(default, setter(into))]
     pub expires_at: DateTime<Utc>,
     /// [ 1 .. ] characters
-    #[builder(default, setter(into))]
+    #[builder(setter(into))]
     pub image_url: String,
 }
 
