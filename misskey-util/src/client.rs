@@ -40,6 +40,8 @@ use misskey_api::model::ad::Ad;
 use misskey_api::model::channel::Channel;
 #[cfg(feature = "12-79-0")]
 use misskey_api::model::gallery::GalleryPost;
+#[cfg(feature = "12-109-0")]
+use misskey_api::model::meta::AdminMeta;
 #[cfg(feature = "12-58-0")]
 use misskey_api::model::page::Page;
 #[cfg(feature = "12-67-0")]
@@ -4075,7 +4077,7 @@ pub trait ClientExt: Client + Sync {
     /// This operation may require moderator privileges.
     #[cfg(feature = "12-109-0")]
     #[cfg_attr(docsrs, doc(cfg(feature = "12-109-0")))]
-    fn admin_meta(&self) -> BoxFuture<Result<Meta, Error<Self::Error>>> {
+    fn admin_meta(&self) -> BoxFuture<Result<AdminMeta, Error<Self::Error>>> {
         Box::pin(async move {
             let meta = self
                 .request(endpoint::admin::meta::Request::default())
