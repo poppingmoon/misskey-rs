@@ -9,6 +9,10 @@ pub struct Ad {
     pub id: Id<Ad>,
     #[serde(default)]
     pub created_at: Option<DateTime<Utc>>,
+    #[cfg(feature = "13-7-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-7-0")))]
+    #[serde(default)]
+    pub starts_at: Option<DateTime<Utc>>,
     #[serde(default)]
     pub expires_at: Option<DateTime<Utc>>,
     pub place: String,
