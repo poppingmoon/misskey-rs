@@ -764,6 +764,8 @@ impl<C> AdBuilder<C> {
             priority: "middle".to_string(),
             #[cfg(feature = "12-81-0")]
             ratio: 1,
+            #[cfg(feature = "13-7-0")]
+            starts_at: chrono::Utc::now(),
             expires_at: chrono::Utc::now() + chrono::Duration::hours(1),
             image_url: String::default(),
         };
@@ -839,6 +841,14 @@ impl<C> AdBuilder<C> {
         self
     }
 
+    #[cfg(feature = "13-7-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-7-0")))]
+    /// Sets the start date of the ad.
+    pub fn starts_at(&mut self, starts_at: impl Into<DateTime<Utc>>) -> &mut Self {
+        self.request.starts_at = starts_at.into();
+        self
+    }
+
     /// Sets the expiration date of the ad.
     pub fn expires_at(&mut self, expires_at: impl Into<DateTime<Utc>>) -> &mut Self {
         self.request.expires_at = expires_at.into();
@@ -881,6 +891,8 @@ impl<C> AdUpdateBuilder<C> {
     pub fn new(client: C, ad: Ad) -> Self {
         let Ad {
             id,
+            #[cfg(feature = "13-7-0")]
+            starts_at,
             expires_at,
             place,
             priority,
@@ -891,6 +903,8 @@ impl<C> AdUpdateBuilder<C> {
             memo,
             ..
         } = ad;
+        #[cfg(feature = "13-7-0")]
+        let starts_at = starts_at.unwrap_or_else(chrono::Utc::now);
         let expires_at =
             expires_at.unwrap_or_else(|| chrono::Utc::now() + chrono::Duration::hours(1));
         let priority = priority.unwrap_or("middle".to_string());
@@ -903,6 +917,8 @@ impl<C> AdUpdateBuilder<C> {
             priority,
             #[cfg(feature = "12-81-0")]
             ratio,
+            #[cfg(feature = "13-7-0")]
+            starts_at,
             expires_at,
             image_url,
         };
@@ -978,6 +994,13 @@ impl<C> AdUpdateBuilder<C> {
         self
     }
 
+    #[cfg(feature = "13-7-0")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "13-7-0")))]
+    /// Sets the start date of the ad.
+    pub fn starts_at(&mut self, starts_at: impl Into<DateTime<Utc>>) -> &mut Self {
+        self.request.starts_at = starts_at.into();
+        self
+    }
     /// Sets the expiration date of the ad.
     pub fn expires_at(&mut self, expires_at: impl Into<DateTime<Utc>>) -> &mut Self {
         self.request.expires_at = expires_at.into();
