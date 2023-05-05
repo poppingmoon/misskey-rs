@@ -1,4 +1,4 @@
-use crate::model::meta::Meta;
+use crate::model::meta::AdminMeta;
 
 use serde::Serialize;
 
@@ -7,7 +7,7 @@ use serde::Serialize;
 pub struct Request {}
 
 impl misskey_core::Request for Request {
-    type Response = Meta;
+    type Response = AdminMeta;
     const ENDPOINT: &'static str = "admin/meta";
 }
 
