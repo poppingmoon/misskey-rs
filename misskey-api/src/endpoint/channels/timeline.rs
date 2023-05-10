@@ -49,11 +49,11 @@ mod tests {
     async fn request() {
         let client = TestClient::new();
         let channel = client
-            .test(crate::endpoint::channels::create::Request {
-                name: "test".to_string(),
-                description: None,
-                banner_id: None,
-            })
+            .test(
+                crate::endpoint::channels::create::Request::builder()
+                    .name("test")
+                    .build(),
+            )
             .await;
 
         client
@@ -72,11 +72,11 @@ mod tests {
     async fn request_with_limit() {
         let client = TestClient::new();
         let channel = client
-            .test(crate::endpoint::channels::create::Request {
-                name: "test".to_string(),
-                description: None,
-                banner_id: None,
-            })
+            .test(
+                crate::endpoint::channels::create::Request::builder()
+                    .name("test")
+                    .build(),
+            )
             .await;
 
         client
@@ -95,11 +95,11 @@ mod tests {
     async fn request_paginate() {
         let client = TestClient::new();
         let channel = client
-            .test(crate::endpoint::channels::create::Request {
-                name: "test".to_string(),
-                description: None,
-                banner_id: None,
-            })
+            .test(
+                crate::endpoint::channels::create::Request::builder()
+                    .name("test")
+                    .build(),
+            )
             .await;
         let note = client
             .test(
@@ -127,11 +127,11 @@ mod tests {
     async fn request_with_date() {
         let client = TestClient::new();
         let channel = client
-            .test(crate::endpoint::channels::create::Request {
-                name: "test".to_string(),
-                description: None,
-                banner_id: None,
-            })
+            .test(
+                crate::endpoint::channels::create::Request::builder()
+                    .name("test")
+                    .build(),
+            )
             .await;
         let now = chrono::Utc::now();
 

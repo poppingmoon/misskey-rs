@@ -39,11 +39,11 @@ mod tests {
         let http_client = HttpTestClient::new();
         let client = TestClient::new().await;
         let channel = http_client
-            .test(crate::endpoint::channels::create::Request {
-                name: "test".to_string(),
-                description: None,
-                banner_id: None,
-            })
+            .test(
+                crate::endpoint::channels::create::Request::builder()
+                    .name("test")
+                    .build(),
+            )
             .await;
 
         let mut stream = client
@@ -60,11 +60,11 @@ mod tests {
         let http_client = HttpTestClient::new();
         let client = TestClient::new().await;
         let channel = http_client
-            .test(crate::endpoint::channels::create::Request {
-                name: "test".to_string(),
-                description: None,
-                banner_id: None,
-            })
+            .test(
+                crate::endpoint::channels::create::Request::builder()
+                    .name("test")
+                    .build(),
+            )
             .await;
 
         let mut stream = client
